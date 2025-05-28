@@ -8,7 +8,7 @@ This repository contains writeups for various Hack The Box challenges.
 ## TryHackMe - Writeups
 This repository includes writeups for TryHackMe challenges.
 
-- [Pickle Rick - Writeup](TryHackMe\PickleRick\PickleRick.md)
+- [Pickle Rick - Writeup](TryHackMe/PickleRick/PickleRick.md)
 
 ## VulnHub - Writeups
 This repository also includes writeups for VulnHub challenges.
